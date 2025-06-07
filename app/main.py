@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from sqlalchemy.orm import Session
-from core.database import SessionLocal ,Base ,Engine
+from .core.database import SessionLocal ,Base ,Engine
+from sqlalchemy.exc import SQLAlchemyError
 
 app = FastAPI(title="ecommerce backend using fastapi")
 
@@ -14,6 +15,13 @@ def get_db():
     finally:
         db.close()
 
+@app.on_event("startup")
+async def startup_event():
+    try:
+        db = SessionLocal()
+        print("Database connected successfully!")
+    except SQLAlchemyError as e:
+        print(f"Database connection failed: {e}")
 
 @app.get("/") # decorater that wraps the function
 async def root():
