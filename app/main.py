@@ -5,7 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 app = FastAPI(title="ecommerce backend using fastapi")
 
-# this create tables on the startup
+
 Base.metadata.create_all(bind=Engine)
 
 def get_db():
