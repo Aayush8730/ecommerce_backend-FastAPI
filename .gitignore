@@ -6,3 +6,6 @@ venv/
 __pycache__/
 *.pyc
 *.pyo
+
+# Ignore alembic env
+app/alembic/env.py
