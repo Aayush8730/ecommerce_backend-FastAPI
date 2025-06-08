@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from sqlalchemy.orm import Session
 from .core.database import SessionLocal ,Base ,Engine
 from sqlalchemy.exc import SQLAlchemyError
-from app.auth.models import User 
 
 app = FastAPI(title="ecommerce backend using fastapi")
 
