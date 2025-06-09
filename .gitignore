@@ -9,3 +9,6 @@ __pycache__/
 
 # Ignore alembic env
 app/alembic/env.py
+
+# ignore configurational settings
+config.py
