@@ -1,12 +1,14 @@
-from fastapi import APIRouter, HTTPException, Depends, status
+from fastapi import APIRouter, Form, HTTPException, Depends, status
+from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
 from app.auth.jwt_handler import create_access_token, create_refresh_token
-from app.auth.utils import hash_password, verify_password
+from app.auth.services import send_reset_email
+from app.auth.utils import generate_reset_token, hash_password, verify_password, verify_reset_token
 from app.auth.models import User
 from app.core.database import get_db
 from enum import Enum
-from app.auth.schemas import SignupRequest, SigninRequest, TokenResponse
+from app.auth.schemas import ForgotPasswordRequest, ResetPasswordRequest, SignupRequest, SigninRequest, TokenResponse
 
 router = APIRouter()
 
@@ -14,9 +16,7 @@ router = APIRouter()
 def signup(request: SignupRequest, db: Session = Depends(get_db)):
     existing_user = db.query(User).filter(User.email == request.email).first()
     if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered."
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Email already registered."
         )
 
     hashed_password = hash_password(request.password)  
@@ -50,3 +50,45 @@ def signin(request: SigninRequest, db: Session = Depends(get_db)):
         "refresh_token": refresh_token,
         "token_type": "bearer"
     }
+
+@router.post("/forgot-password")
+def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == request.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    token = generate_reset_token(user.email)
+    send_reset_email(user.email, token)
+    return {"message": "Password reset email sent"}
+
+@router.post("/reset-password")
+def reset_password(token: str = Form(...), new_password: str = Form(...), db: Session = Depends(get_db)):
+    email = verify_reset_token(token)
+    if not email:
+        raise HTTPException(status_code=400, detail="Invalid or expired token")
+
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    user.hashed_password = hash_password(new_password)
+    db.commit()
+    return HTMLResponse(content="<h3>Password updated successfully</h3>")
+
+@router.get("/reset-password-form")
+def reset_password_form(token: str):
+    html_content = f"""
+    <html>
+        <body>
+            <h2>Reset Your Password</h2>
+            <form method="post" action="/auth/reset-password">
+                <input type="hidden" name="token" value="{token}">
+                <label>New Password:</label><br>
+                <input type="password" name="new_password" required><br><br>
+                <button type="submit">Reset Password</button>
+            </form>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
+
