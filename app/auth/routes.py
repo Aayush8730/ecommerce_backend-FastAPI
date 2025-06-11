@@ -91,4 +91,3 @@ def reset_password_form(token: str):
     </html>
     """
     return HTMLResponse(content=html_content)
-

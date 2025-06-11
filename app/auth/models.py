@@ -1,5 +1,6 @@
 from sqlalchemy import Integer , Column , String , Enum
 import enum
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 class UserRole(str,enum.Enum):
@@ -16,3 +17,4 @@ class User(Base):
   role = Column(Enum(UserRole),nullable=False,default=UserRole.user)
 
   
+  products = relationship("Product", back_populates="creator")
