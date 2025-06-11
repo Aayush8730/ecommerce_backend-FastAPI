@@ -1,3 +1,4 @@
+from typing import List, Optional
 from pydantic import BaseModel
 
 class CreateProduct(BaseModel):
@@ -13,3 +14,8 @@ class ProductOut(CreateProduct): #inherits the CreateProduct Basemodel
 
     class Config:
         orm_mode = True
+
+
+class ProductSearchResponse(BaseModel):
+    products: List[ProductOut]
+    message: Optional[str] = None

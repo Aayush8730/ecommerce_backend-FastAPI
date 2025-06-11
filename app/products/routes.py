@@ -45,7 +45,7 @@ def get_product_by_id(product_id: int ,db: Session = Depends(get_db) , current_u
 @router.put("/{product_id}", response_model=schemas.ProductOut)
 def update_product(
     product_id: int,
-    product_data: schemas.CreateProduct = Body(...),
+    product_data: schemas.CreateProduct,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -81,5 +81,6 @@ def delete_product(product_id: int,
     db.delete(product)
     db.commit()
     return {"message": "Product deleted successfully"}
+
 
 

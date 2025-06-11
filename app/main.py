@@ -4,6 +4,7 @@ from .core.database import SessionLocal ,Base ,Engine
 from sqlalchemy.exc import SQLAlchemyError
 from app.auth.routes import router as auth_router
 from app.products.routes import router as product_router
+from app.products.public_routes import router as public_product_router
 from fastapi.openapi.models import OAuthFlows as OAuthFlowsModel, SecurityScheme as SecuritySchemeModel
 from fastapi.openapi.utils import get_openapi
 from fastapi import FastAPI, Security, Depends
@@ -16,6 +17,7 @@ Base.metadata.create_all(bind=Engine)
 
 app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(product_router, prefix="/admin/products", tags=["Admin - Products"])
+app.include_router(public_product_router, prefix="/products", tags=["Public - Products"])
 
 
 @app.get("/") # decorater that wraps the function
