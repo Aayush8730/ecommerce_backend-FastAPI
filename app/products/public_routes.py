@@ -81,3 +81,10 @@ def search_products(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Not able to search right now!!"
         )
+    
+@router.get("/products/{id}", response_model=schemas.ProductOut)
+def get_product_detail(id: int, db: Session = Depends(get_db)):
+    product = db.query(models.Product).filter(models.Product.id == id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return product

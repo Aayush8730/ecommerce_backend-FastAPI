@@ -9,6 +9,9 @@ from fastapi.openapi.models import OAuthFlows as OAuthFlowsModel, SecurityScheme
 from fastapi.openapi.utils import get_openapi
 from fastapi import FastAPI, Security, Depends
 from fastapi.security import OAuth2PasswordBearer
+from app.cart.routes import router as cart_router
+from app.checkout.routes import router as checkout_router
+from app.orders.routes import router as orders_router
 
 app = FastAPI(title="ecommerce backend using fastapi")
 
@@ -18,6 +21,9 @@ Base.metadata.create_all(bind=Engine)
 app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(product_router, prefix="/admin/products", tags=["Admin - Products"])
 app.include_router(public_product_router, prefix="/products", tags=["Public - Products"])
+app.include_router(cart_router, prefix="/cart", tags=["User - Cart"])
+app.include_router(checkout_router, prefix="", tags=["User - Checkout"])
+app.include_router(orders_router, prefix="/orders", tags=["Order History and Details"])
 
 
 @app.get("/") # decorater that wraps the function

@@ -4,6 +4,8 @@ from app.core.database import Base
 
 class Product(Base):
     __tablename__ = "products"
+    __table_args__ = {'extend_existing': True}
+
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False)
@@ -16,3 +18,6 @@ class Product(Base):
     created_by = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     creator = relationship("User", back_populates="products")
+    cart_items = relationship("Cart", back_populates="product")
+
+    

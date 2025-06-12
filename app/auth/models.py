@@ -9,6 +9,7 @@ class UserRole(str,enum.Enum):
 
 class User(Base):
   __tablename__ = "users"
+  __table_args__ = {'extend_existing': True}
 
   id = Column(Integer,primary_key=True,index=True)
   name = Column(String,nullable=False)
@@ -18,3 +19,5 @@ class User(Base):
 
   
   products = relationship("Product", back_populates="creator")
+  cart_items = relationship("Cart", back_populates="user")
+  orders = relationship("Order", back_populates="user", cascade="all, delete")
