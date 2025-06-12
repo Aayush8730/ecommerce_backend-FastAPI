@@ -7,6 +7,7 @@ from app.auth.utils import get_current_user
 from app.products.models import Product
 from app.auth.models import User
 from .utils import require_user_role
+from app.core.logging import logger
 
 router = APIRouter()
 
@@ -21,7 +22,9 @@ def add_to_cart(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Product not found")
 
     if item.quantity < 1:
+        logger.warning(f"A negative quantity of {item.quantity} added by the user")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Quantity must be at least 1")
+        
 
     cart_item = db.query(models.Cart).filter_by(
         user_id=current_user.id,
@@ -40,6 +43,7 @@ def add_to_cart(
         return cart_item
     else:
         if item.quantity > product.stock:
+            logger(f"{User.name} chose the items more than the product stock")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Only {product.stock} item's in stock"
@@ -53,6 +57,9 @@ def add_to_cart(
         db.add(new_cart_item)
         db.commit()
         db.refresh(new_cart_item)
+        logger.info(f"new cart item added - {current_user.id,
+        item.product_id,
+        item.quantity} by {User.email}")
         return new_cart_item
   
 
@@ -61,6 +68,7 @@ def view_cart(
     db: Session = Depends(get_db),
     current_user: User = Depends(require_user_role),
 ):
+    logger.info(f"request to view the cart by {User.email}")
     cart_items = db.query(models.Cart).filter(models.Cart.user_id == current_user.id).all()
     return cart_items
 
@@ -70,7 +78,7 @@ def modify_cart_quantity(product_id: int,
                          db: Session = Depends(get_db),
                          current_user: User = Depends(require_user_role)):
 
-
+    logger.info(f"request to change the cart quantity of item with product id {product_id}")
     cart_item = db.query(models.Cart).filter(
         models.Cart.user_id == current_user.id,
         models.Cart.product_id == product_id

@@ -9,13 +9,16 @@ from app.auth.models import User
 from app.core.database import get_db
 from enum import Enum
 from app.auth.schemas import ForgotPasswordRequest, ResetPasswordRequest, SignupRequest, SigninRequest, TokenResponse
+from app.core.logging import logger
 
 router = APIRouter()
 
 @router.post("/signup") #decorator
 def signup(request: SignupRequest, db: Session = Depends(get_db)):
+    logger.info(f"Attempt to signup using email {request.email}")
     existing_user = db.query(User).filter(User.email == request.email).first()
     if existing_user:
+        logger.warning(f"Registration failed - email already exists {request.email}")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Email already registered."
         )
 
@@ -30,13 +33,15 @@ def signup(request: SignupRequest, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
 
-   
+    logger.info(f"user created successfully with the email - {request.email} and role: {new_user.role}")
     return {"message": "User created successfully. Please sign in."}
 
 @router.post("/signin", response_model=TokenResponse)
 def signin(request: SigninRequest, db: Session = Depends(get_db)):
+    logger.info(f"Attempt to signin using the email - {request.email}")
     user = db.query(User).filter(User.email == request.email).first()
     if not user or not verify_password(request.password, user.hashed_password):
+        logger.warning(f"Wrong attempt to signin by {request.email}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid credentials."
@@ -44,7 +49,7 @@ def signin(request: SigninRequest, db: Session = Depends(get_db)):
 
     access_token = create_access_token({"sub": user.email, "role": user.role})
     refresh_token = create_refresh_token({"sub": user.email})
-
+    logger.info(f"user with email - {request.email} successfully signed in")
     return {
         "access_token": access_token,
         "refresh_token": refresh_token,
@@ -53,6 +58,7 @@ def signin(request: SigninRequest, db: Session = Depends(get_db)):
 
 @router.post("/forgot-password")
 def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(get_db)):
+    logger.info(f"attempt to reset the password using the free email service")
     user = db.query(User).filter(User.email == request.email).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -73,6 +79,7 @@ def reset_password(token: str = Form(...), new_password: str = Form(...), db: Se
 
     user.hashed_password = hash_password(new_password)
     db.commit()
+    logger.info(f"password updated succesfully {user.email}")
     return HTMLResponse(content="<h3>Password updated successfully</h3>")
 
 @router.get("/reset-password-form")

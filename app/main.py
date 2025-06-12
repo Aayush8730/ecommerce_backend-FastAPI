@@ -12,9 +12,10 @@ from fastapi.security import OAuth2PasswordBearer
 from app.cart.routes import router as cart_router
 from app.checkout.routes import router as checkout_router
 from app.orders.routes import router as orders_router
+from app.core.logging import logger
 
 app = FastAPI(title="ecommerce backend using fastapi")
-
+logger.info("App restarted")
 
 Base.metadata.create_all(bind=Engine)
 

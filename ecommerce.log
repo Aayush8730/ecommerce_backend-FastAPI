@@ -1,0 +1,28 @@
+[2025-06-12 22:15:54,024] INFO - Connected to the database
+[2025-06-12 22:15:54,034] INFO - Attempt to signup using email aliasgarsaify7049@gmail.com
+[2025-06-12 22:15:54,488] INFO - user created successfully with the email - aliasgarsaify7049@gmail.com and role: UserRole.user
+[2025-06-12 22:15:54,488] INFO - Database connection closed
+[2025-06-12 22:16:30,517] INFO - Connected to the database
+[2025-06-12 22:16:30,520] INFO - Attempt to signin using the email - aliasgarsaify7049@gmail.com
+[2025-06-12 22:16:30,925] INFO - user with email - aliasgarsaify7049@gmail.com successfully signed in
+[2025-06-12 22:16:30,926] INFO - Database connection closed
+[2025-06-12 22:17:21,045] INFO - Connected to the database
+[2025-06-12 22:17:21,083] INFO - Database connection closed
+[2025-06-12 22:33:40,413] INFO - App restarted
+[2025-06-12 22:35:55,677] INFO - App restarted
+[2025-06-12 22:36:02,509] INFO - App restarted
+[2025-06-12 22:40:34,423] INFO - App restarted
+[2025-06-12 22:42:24,845] INFO - App restarted
+[2025-06-12 22:44:50,160] INFO - App restarted
+[2025-06-12 22:45:12,018] INFO - App restarted
+[2025-06-12 22:52:01,495] INFO - App restarted
+[2025-06-12 23:06:45,483] INFO - App restarted
+[2025-06-12 23:07:11,712] INFO - Connected to the database
+[2025-06-12 23:07:11,726] INFO - Database connection closed
+[2025-06-12 23:07:31,530] INFO - Connected to the database
+[2025-06-12 23:07:31,540] INFO - Attempt to signin using the email - aliasgarsaify7049@gmail.com
+[2025-06-12 23:07:31,971] INFO - user with email - aliasgarsaify7049@gmail.com successfully signed in
+[2025-06-12 23:07:31,973] INFO - Database connection closed
+[2025-06-12 23:07:52,660] INFO - Connected to the database
+[2025-06-12 23:07:52,665] INFO - request to view the cart by User.email
+[2025-06-12 23:07:52,670] INFO - Database connection closed
