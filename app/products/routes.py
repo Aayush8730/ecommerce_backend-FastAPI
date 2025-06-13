@@ -96,11 +96,3 @@ def delete_product(product_id: int,
     db.commit()
     return {"message": "Product deleted successfully"}
 
-# app/products/routes.py
-from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.orm import Session
-from app.core.database import get_db
-from app.products import models, schemas
-
-router = APIRouter()
-

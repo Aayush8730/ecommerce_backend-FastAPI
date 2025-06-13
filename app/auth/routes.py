@@ -68,16 +68,16 @@ def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(get_db
     return {"message": "Password reset email sent"}
 
 @router.post("/reset-password")
-def reset_password(token: str = Form(...), new_password: str = Form(...), db: Session = Depends(get_db)):
-    email = verify_reset_token(token)
+def reset_password(request: ResetPasswordRequest = Depends(ResetPasswordRequest.as_form), db: Session = Depends(get_db)):
+    email = verify_reset_token(request.token)
     if not email:
         raise HTTPException(status_code=400, detail="Invalid or expired token")
 
     user = db.query(User).filter(User.email == email).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-
-    user.hashed_password = hash_password(new_password)
+    
+    user.hashed_password = hash_password(request.new_password)
     db.commit()
     logger.info(f"password updated succesfully {user.email}")
     return HTMLResponse(content="<h3>Password updated successfully</h3>")

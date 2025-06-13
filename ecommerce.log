@@ -26,3 +26,36 @@
 [2025-06-12 23:07:52,660] INFO - Connected to the database
 [2025-06-12 23:07:52,665] INFO - request to view the cart by User.email
 [2025-06-12 23:07:52,670] INFO - Database connection closed
+[2025-06-12 23:13:16,743] INFO - App restarted
+[2025-06-12 23:13:31,327] INFO - Connected to the database
+[2025-06-12 23:13:31,354] INFO - request to view the cart by User.email
+[2025-06-12 23:13:31,359] INFO - Database connection closed
+[2025-06-13 09:23:00,574] INFO - App restarted
+[2025-06-13 09:24:13,707] INFO - App restarted
+[2025-06-13 09:24:23,541] INFO - App restarted
+[2025-06-13 09:25:25,196] INFO - Connected to the database
+[2025-06-13 09:25:25,220] INFO - Database connection closed
+[2025-06-13 09:25:42,663] INFO - Connected to the database
+[2025-06-13 09:25:42,669] INFO - Database connection closed
+[2025-06-13 09:38:35,265] INFO - Connected to the database
+[2025-06-13 09:38:35,289] INFO - Database connection closed
+[2025-06-13 09:53:25,065] INFO - App restarted
+[2025-06-13 09:55:41,077] INFO - App restarted
+[2025-06-13 10:01:32,219] INFO - App restarted
+[2025-06-13 10:01:48,311] INFO - Connected to the database
+[2025-06-13 10:01:48,325] INFO - Database connection closed
+[2025-06-13 10:02:01,766] INFO - Connected to the database
+[2025-06-13 10:02:01,767] INFO - Database connection closed
+[2025-06-13 10:02:15,865] INFO - Connected to the database
+[2025-06-13 10:02:15,866] INFO - Attempt to signup using email user@example.com
+[2025-06-13 10:02:16,318] INFO - user created successfully with the email - user@example.com and role: UserRole.user
+[2025-06-13 10:02:16,319] INFO - Database connection closed
+[2025-06-13 10:11:18,175] INFO - Connected to the database
+[2025-06-13 10:11:18,183] INFO - attempt to reset the password using the free email service
+[2025-06-13 10:11:18,222] INFO - password reset email sent to aayushp717@gmail.com
+[2025-06-13 10:11:22,661] INFO - Database connection closed
+[2025-06-13 10:11:57,944] INFO - Connected to the database
+[2025-06-13 10:11:57,948] INFO - attempt to reset the password using the free email service
+[2025-06-13 10:11:57,954] INFO - password reset email sent to aliasgarsaify7049@gmail.com
+[2025-06-13 10:12:01,946] INFO - Database connection closed
+[2025-06-13 10:14:04,442] INFO - App restarted
