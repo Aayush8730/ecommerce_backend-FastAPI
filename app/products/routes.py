@@ -1,6 +1,6 @@
 
 from typing import List
-from fastapi import APIRouter, Body, Depends, HTTPException, status
+from fastapi import APIRouter, Body, Depends, HTTPException, Path, Query, status
 from sqlalchemy.orm import Session
 from app.auth.models import User
 from app.auth.utils import get_current_user
@@ -23,7 +23,7 @@ def create_product( product_data: schemas.CreateProduct,db: Session = Depends(ge
     return product
 
 @router.get("/", response_model=List[schemas.ProductOut])
-def get_products(start: int = 0, end: int = 10, db: Session = Depends(get_db),
+def get_products(start: int = Query(default = None , ge = 0), end: int = Query(default=None,ge=0), db: Session = Depends(get_db),
                  current_user: User = Depends(get_current_user)):
     if current_user.role != "admin":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not Authorized")
@@ -35,7 +35,7 @@ def get_products(start: int = 0, end: int = 10, db: Session = Depends(get_db),
 
 
 @router.get("/{product_id}", response_model=schemas.ProductOut)
-def get_product_by_id(product_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def get_product_by_id(product_id: int = Path(...,gt=0), db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     if current_user.role != "admin":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not Authorized")
 
@@ -78,7 +78,7 @@ def update_product(
 
 
 @router.delete("/{product_id}")
-def delete_product(product_id: int,
+def delete_product(product_id: int = Path(...,gt=0),
                    db: Session = Depends(get_db),
                    current_user: User = Depends(get_current_user)):
     if current_user.role != "admin":

@@ -1,16 +1,29 @@
-from pydantic import EmailStr , BaseModel
-from enum import Enum
-from fastapi import Form
-from pydantic import BaseModel, field_validator
-import re
-
 from pydantic import BaseModel, EmailStr, field_validator
 from enum import Enum
-import re
+from fastapi import Form
 
 class UserRole(str, Enum):
     admin = "admin"
     user = "user"
+
+def validate_password(password: str) -> bool:
+    if len(password) < 8:
+        return False
+
+    has_upper = False
+    has_digit = False
+    has_special = False
+    special_chars = "!@#$%^&*"
+
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
+
+    return has_upper and has_digit and has_special
 
 class SignupRequest(BaseModel):
     name: str
@@ -20,17 +33,9 @@ class SignupRequest(BaseModel):
 
     @field_validator("password")
     @classmethod
-    def validate_password(cls, v: str) -> str:
-        if len(v) < 8:
-            raise ValueError("Password must be at least 8 characters long.")
-        if not re.search(r"[A-Z]", v):
-            raise ValueError("Password must contain at least one uppercase letter.")
-        if not re.search(r"[a-z]", v):
-            raise ValueError("Password must contain at least one lowercase letter.")
-        if not re.search(r"[0-9]", v):
-            raise ValueError("Password must contain at least one digit.")
-        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", v):
-            raise ValueError("Password must contain at least one special character.")
+    def check_password(cls, v: str) -> str:
+        if not validate_password(v):
+            raise ValueError("Password must be at least 8 characters long and include an uppercase letter, a digit, and a special character (!@#$%^&*).")
         return v
 
 class SigninRequest(BaseModel):
@@ -39,17 +44,9 @@ class SigninRequest(BaseModel):
 
     @field_validator("password")
     @classmethod
-    def validate_password(cls, v: str) -> str:
-        if len(v) < 8:
-            raise ValueError("Password must be at least 8 characters long.")
-        if not re.search(r"[A-Z]", v):
-            raise ValueError("Password must contain at least one uppercase letter.")
-        if not re.search(r"[a-z]", v):
-            raise ValueError("Password must contain at least one lowercase letter.")
-        if not re.search(r"[0-9]", v):
-            raise ValueError("Password must contain at least one digit.")
-        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", v):
-            raise ValueError("Password must contain at least one special character.")
+    def check_password(cls, v: str) -> str:
+        if not validate_password(v):
+            raise ValueError("Password must be at least 8 characters long and include an uppercase letter, a digit, and a special character (!@#$%^&*).")
         return v
 
 class TokenResponse(BaseModel):
@@ -59,7 +56,6 @@ class TokenResponse(BaseModel):
 
 class ForgotPasswordRequest(BaseModel):
     email: EmailStr
-
 
 class ResetPasswordRequest(BaseModel):
     token: str
@@ -75,15 +71,7 @@ class ResetPasswordRequest(BaseModel):
 
     @field_validator("new_password")
     @classmethod
-    def validate_password(cls, v: str) -> str:
-        if len(v) < 8:
-            raise ValueError("Password must be at least 8 characters long.")
-        if not re.search(r"[A-Z]", v):
-            raise ValueError("Password must contain at least one uppercase letter.")
-        if not re.search(r"[a-z]", v):
-            raise ValueError("Password must contain at least one lowercase letter.")
-        if not re.search(r"[0-9]", v):
-            raise ValueError("Password must contain at least one digit.")
-        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", v):
-            raise ValueError("Password must contain at least one special character.")
+    def check_password(cls, v: str) -> str:
+        if not validate_password(v):
+            raise ValueError("Password must be at least 8 characters long and include an uppercase letter, a digit, and a special character (!@#$%^&*).")
         return v

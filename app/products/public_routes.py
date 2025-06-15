@@ -1,110 +1,97 @@
-from typing import List
-from fastapi import APIRouter, Body, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from sqlalchemy.orm import Session
-from app.auth.models import User
-from app.auth.utils import get_current_user
+from typing import List, Optional
+from app.products import models, schemas
 from app.core.database import get_db
-from app.products import schemas, models
+from app.products.schemas import ProductSearchResponse
 from app.core.logging import logger
 
 router = APIRouter()
 
-@router.post("/", response_model=schemas.ProductOut)
-def create_product(product_data: schemas.CreateProduct,
-                   db: Session = Depends(get_db),
-                   current_user: User = Depends(get_current_user)):
-    if current_user.role != "admin":
-        logger.warning(f"Unauthorized create attempt by user {current_user.email}")
-        raise HTTPException(status_code=403, detail="Not authorized")
-
-    product = models.Product(**product_data.model_dump(), created_by=current_user.id)
-    db.add(product)
-    db.commit()
-    db.refresh(product)
-
-    logger.info(f"Product '{product.name}' created by admin {current_user.email} (ID: {product.id})")
-    return product
-
 @router.get("/", response_model=List[schemas.ProductOut])
-def get_products(start: int = 0, end: int = 10,
-                 db: Session = Depends(get_db),
-                 current_user: User = Depends(get_current_user)):
-    if current_user.role != "admin":
-        logger.warning(f"Unauthorized product list attempt by {current_user.email}")
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not Authorized")
+def list_products(
+    category: Optional[str] = None,
+    min_price: Optional[float] = Query(default=None, ge=0),
+    max_price: Optional[float] = Query(default=None, ge=0),
+    sort_by: Optional[str] = Query(default="id"),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=10, ge=1, le=100),
+    db: Session = Depends(get_db)
+):
+    logger.info(f"User searched for products with: category={category}, min_price={min_price}, max_price={max_price}, sort_by={sort_by}, page={page}, page_size={page_size}")
     
-    products = db.query(models.Product).filter(
-        models.Product.created_by == current_user.id
-    ).offset(start).limit(end).all()
+    valid_sort_fields = ["price", "name", "id"]
+    if sort_by not in valid_sort_fields:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid sort_by field. Must be one of: {', '.join(valid_sort_fields)}"
+        )
 
-    logger.info(f"Admin {current_user.email} fetched products from {start} to {end}")
-    return products
+    try:
+        query = db.query(models.Product)
 
-@router.get("/{product_id}", response_model=schemas.ProductOut)
-def get_product_by_id(product_id: int,
-                      db: Session = Depends(get_db),
-                      current_user: User = Depends(get_current_user)):
-    if current_user.role != "admin":
-        logger.warning(f"Unauthorized product detail attempt by {current_user.email}")
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not Authorized")
+        if category:
+            query = query.filter(models.Product.category == category)
+        if min_price is not None:
+            query = query.filter(models.Product.price >= min_price)
+        if max_price is not None:
+            query = query.filter(models.Product.price <= max_price)
 
-    product = db.query(models.Product).filter(
-        models.Product.id == product_id,
-        models.Product.created_by == current_user.id
-    ).first()
+        query = query.order_by(getattr(models.Product, sort_by))
 
-    if not product:
-        logger.warning(f"Product ID {product_id} not found or unauthorized for user {current_user.email}")
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+        offset = (page - 1) * page_size
+        products = query.offset(offset).limit(page_size).all()
 
-    logger.info(f"Admin {current_user.email} viewed product ID {product_id}")
-    return product
+        logger.info(f"Products fetched successfully with filters.")
+        return products
 
-@router.put("/{product_id}", response_model=schemas.ProductOut)
-def update_product(product_id: int,
-                   product_data: schemas.CreateProduct,
-                   db: Session = Depends(get_db),
-                   current_user: User = Depends(get_current_user)):
-    if current_user.role != "admin":
-        logger.warning(f"Unauthorized update attempt by {current_user.email}")
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not Authorized")
+    except Exception as e:
+        logger.error(f"Error fetching products: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Something went wrong while fetching products."
+        )
+
+
+@router.get("/search", response_model=ProductSearchResponse)
+def search_products(
+    keyword: str = Query(..., min_length=1, max_length=100),
+    db: Session = Depends(get_db),
+):
+    logger.info(f"Search requested with keyword: {keyword}")
+    keyword = keyword.strip()
+   
+    try:
+        keyword_pattern = f"%{keyword}%"
+        products = db.query(models.Product).filter(
+            models.Product.name.ilike(keyword_pattern) |
+            models.Product.description.ilike(keyword_pattern) |
+            models.Product.category.ilike(keyword_pattern)
+        ).all()
+
+        if not products:
+            return {
+                "products": [],
+                "message": "No matching products found. Try describing the product in more detail."
+            }
+
+        return {
+            "products": products,
+            "message": None 
+        }
+
+    except Exception as e:
+        logger.error(f"Search error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Not able to search right now!!"
+        )
     
-    product = db.query(models.Product).filter(
-        models.Product.id == product_id,
-        models.Product.created_by == current_user.id
-    ).first()
 
+@router.get("/{id}", response_model=schemas.ProductOut)
+def get_product_detail(id: int = Path(..., ge=1), db: Session = Depends(get_db)):
+
+    product = db.query(models.Product).filter(models.Product.id == id).first()
     if not product:
-        logger.warning(f"Update failed. Product ID {product_id} not found for user {current_user.email}")
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found or unauthorized")
-
-    for key, value in product_data.model_dump().items():
-        setattr(product, key, value)
-
-    db.commit()
-    db.refresh(product)
-
-    logger.info(f"Product ID {product_id} updated by admin {current_user.email}")
+        raise HTTPException(status_code=404, detail="Product not found")
     return product
-
-@router.delete("/{product_id}")
-def delete_product(product_id: int,
-                   db: Session = Depends(get_db),
-                   current_user: User = Depends(get_current_user)):
-    if current_user.role != "admin":
-        logger.warning(f"Unauthorized delete attempt by {current_user.email}")
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized")
-
-    product = db.query(models.Product).filter(
-        models.Product.id == product_id,
-        models.Product.created_by == current_user.id
-    ).first()
-
-    if not product:
-        logger.warning(f"Delete failed. Product ID {product_id} not found for user {current_user.email}")
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found or unauthorized")
-
-    db.delete(product)
-    db.commit()
-    logger.info(f"Product ID {product_id} deleted by admin {current_user.email}")
-    return {"message": "Product deleted successfully"}
