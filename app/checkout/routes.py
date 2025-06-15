@@ -5,6 +5,7 @@ from app.cart.utils import require_user_role
 from app.orders import models, schemas
 from app.cart.models import Cart
 from app.products.models import Product
+from app.core.logging import logger
 
 
 
@@ -13,8 +14,9 @@ router = APIRouter()
 @router.post("/checkout", response_model=schemas.OrderCreateResponse)
 def checkout(
     db: Session = Depends(get_db),
-    current_user=Depends(require_user_role)
+    current_user: User = Depends(require_user_role)
 ):
+    logger.info(f"attemp to purchase the cart by the user {current_user.email}")
     cart_items = db.query(Cart).filter(Cart.user_id == current_user.id).all()
     if not cart_items:
         raise HTTPException(status_code=400, detail="Cart is empty")
@@ -44,6 +46,7 @@ def checkout(
 
     db.query(Cart).filter(Cart.user_id == current_user.id).delete() #empties the cart agian 
     db.commit()
+    logger.info(f"Cart checked out successfully by {current_user.email} and cart cleared ")
 
     return {
         "order_id": order.id,

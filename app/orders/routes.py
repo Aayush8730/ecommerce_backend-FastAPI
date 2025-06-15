@@ -1,12 +1,14 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from app.auth.models import User
 from app.core.database import get_db
 from app.auth.utils import get_current_user
 from app.orders import models, schemas
 from app.cart.models import Cart
 from app.products.models import Product
 from app.cart.utils import require_user_role
+from app.core.logging import logger
 
 
 router = APIRouter()
@@ -15,8 +17,9 @@ router = APIRouter()
 @router.get("/", response_model=List[schemas.OrderListResponse])
 def get_user_orders(
     db: Session = Depends(get_db),
-    current_user=Depends(require_user_role)
+    current_user: User = Depends(require_user_role)
 ):
+    logger.info(f"User with email {current_user.email} requesting all the orders")
     orders = db.query(models.Order).filter(models.Order.user_id == current_user.id).all()
     return [
         {
@@ -32,8 +35,9 @@ def get_user_orders(
 def get_order_detail(
     order_id: int,
     db: Session = Depends(get_db),
-    current_user=Depends(require_user_role)
+    current_user: User = Depends(require_user_role)
 ):
+    logger.info(f"{current_user.email} checking for the details of the order with order id {order_id}")
     order = db.query(models.Order).filter(
         models.Order.id == order_id,
         models.Order.user_id == current_user.id
@@ -52,7 +56,7 @@ def get_order_detail(
             "product_name": product.name if product else "Unknown",
             "subtotal": float(item.price_at_purchase) * item.quantity
         })
-
+    
     return {
         "order_id": order.id,
         "created_at": order.created_at,

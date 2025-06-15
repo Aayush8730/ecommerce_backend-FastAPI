@@ -99,7 +99,7 @@ def modify_cart_quantity(product_id: int,
     cart_item.quantity = new_quantity
     db.commit()
     db.refresh(cart_item)
-
+    logger.info(f"cart item quantity moodified by the user {current_user.email}")
     return {
         "message": "Cart item quantity updated",
         "product_id": product_id,
@@ -110,6 +110,7 @@ def modify_cart_quantity(product_id: int,
 def remove_from_cart(product_id: int,
                      db: Session = Depends(get_db),
                      current_user: User = Depends(get_current_user)):
+    logger.info(f"attempt to remove the item from the cart")
     if current_user.role != "user":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized")
 
@@ -120,7 +121,7 @@ def remove_from_cart(product_id: int,
 
     if not cart_item:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found in cart")
-
+    logger.info(f"{cart_item} deleted succesfully")
     db.delete(cart_item)
     db.commit()
     return {"message": "Item removed from cart"}
