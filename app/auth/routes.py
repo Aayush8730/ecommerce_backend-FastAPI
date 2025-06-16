@@ -39,22 +39,34 @@ def signup(request: SignupRequest, db: Session = Depends(get_db)):
 @router.post("/signin", response_model=TokenResponse)
 def signin(request: SigninRequest, db: Session = Depends(get_db)):
     logger.info(f"Attempt to signin using the email - {request.email}")
+
     user = db.query(User).filter(User.email == request.email).first()
-    if not user or not verify_password(request.password, user.hashed_password):
-        logger.warning(f"Wrong attempt to signin by {request.email}")
+    
+    if not user:
+        logger.warning(f"Signin failed: Email not found - {request.email}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid credentials."
+            detail="Email not found. Please enter correct email or correct email format"
+        )
+
+    if not verify_password(request.password, user.hashed_password):
+        logger.warning(f"Signin failed: Incorrect password for - {request.email}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect password."
         )
 
     access_token = create_access_token({"sub": user.email, "role": user.role})
     refresh_token = create_refresh_token({"sub": user.email})
-    logger.info(f"user with email - {request.email} successfully signed in")
+
+    logger.info(f"User with email - {request.email} successfully signed in")
+
     return {
         "access_token": access_token,
         "refresh_token": refresh_token,
         "token_type": "bearer"
     }
+
 
 @router.post("/forgot-password")
 def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(get_db)):
@@ -68,7 +80,7 @@ def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(get_db
     return {"message": "Password reset email sent"}
 
 @router.post("/reset-password")
-def reset_password(request: ResetPasswordRequest = Depends(ResetPasswordRequest.as_form), db: Session = Depends(get_db)):
+def reset_password(request: ResetPasswordRequest , db: Session = Depends(get_db)):
     email = verify_reset_token(request.token)
     if not email:
         raise HTTPException(status_code=400, detail="Invalid or expired token")
@@ -80,21 +92,5 @@ def reset_password(request: ResetPasswordRequest = Depends(ResetPasswordRequest.
     user.hashed_password = hash_password(request.new_password)
     db.commit()
     logger.info(f"password updated succesfully {user.email}")
-    return HTMLResponse(content="<h3>Password updated successfully</h3>")
+    return f"Password updated successfully of user {user.email}"
 
-@router.get("/reset-password-form")
-def reset_password_form(token: str):
-    html_content = f"""
-    <html>
-        <body>
-            <h2>Reset Your Password</h2>
-            <form method="post" action="/auth/reset-password">
-                <input type="hidden" name="token" value="{token}">
-                <label>New Password:</label><br>
-                <input type="password" name="new_password" required><br><br>
-                <button type="submit">Reset Password</button>
-            </form>
-        </body>
-    </html>
-    """
-    return HTMLResponse(content=html_content)

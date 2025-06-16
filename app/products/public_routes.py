@@ -11,10 +11,10 @@ router = APIRouter()
 @router.get("/", response_model=List[schemas.ProductOut])
 def list_products(
     category: Optional[str] = None,
-    min_price: Optional[float] = Query(default=None, ge=0),
-    max_price: Optional[float] = Query(default=None, ge=0),
+    min_price: Optional[float] = Query(default=None, ge=0 ,description="Price must be greater than equal to 0"),
+    max_price: Optional[float] = Query(default=None, ge=0 , description="Price must be greater than 0"),
     sort_by: Optional[str] = Query(default="id"),
-    page: int = Query(default=1, ge=1),
+    page: int = Query(default=1, ge=1 ,description="pages should be greater than 1"),
     page_size: int = Query(default=10, ge=1, le=100),
     db: Session = Depends(get_db)
 ):

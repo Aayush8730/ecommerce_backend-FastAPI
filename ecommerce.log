@@ -143,3 +143,205 @@
 [2025-06-15 21:59:09,479] INFO - Database connection closed
 [2025-06-15 21:59:28,292] INFO - Connected to the database
 [2025-06-15 21:59:28,310] INFO - Database connection closed
+[2025-06-16 16:16:04,948] INFO - App restarted
+[2025-06-16 16:16:24,342] INFO - App restarted
+[2025-06-16 16:29:25,729] INFO - App restarted
+[2025-06-16 16:30:09,931] INFO - App restarted
+[2025-06-16 16:30:10,951] INFO - App restarted
+[2025-06-16 16:32:33,681] INFO - App restarted
+[2025-06-16 16:32:43,267] INFO - App restarted
+[2025-06-16 19:52:35,492] INFO - App restarted
+[2025-06-16 19:52:53,243] INFO - App restarted
+[2025-06-16 19:53:25,171] INFO - Connected to the database
+[2025-06-16 19:53:25,177] INFO - attempt to reset the password using the free email service
+[2025-06-16 19:53:25,212] INFO - password reset email sent to aayushp0822@gmail.com
+[2025-06-16 19:53:29,844] INFO - Database connection closed
+[2025-06-16 19:54:50,194] INFO - Connected to the database
+[2025-06-16 19:54:50,202] INFO - Database connection closed
+[2025-06-16 19:55:06,101] INFO - Connected to the database
+[2025-06-16 19:55:06,561] INFO - password updated succesfully aayushp0822@gmail.com
+[2025-06-16 19:55:06,562] INFO - Database connection closed
+[2025-06-16 19:55:39,443] INFO - App restarted
+[2025-06-16 19:56:44,873] INFO - App restarted
+[2025-06-16 19:58:51,494] INFO - Connected to the database
+[2025-06-16 19:58:51,505] INFO - Attempt to signin using the email - aayushp0822@gmail.com
+[2025-06-16 19:58:51,938] WARNING - Wrong attempt to signin by aayushp0822@gmail.com
+[2025-06-16 19:58:51,939] INFO - Database connection closed
+[2025-06-16 19:59:23,183] INFO - Connected to the database
+[2025-06-16 19:59:23,185] INFO - Attempt to signin using the email - aayushp0822@gmail.co
+[2025-06-16 19:59:23,199] WARNING - Wrong attempt to signin by aayushp0822@gmail.co
+[2025-06-16 19:59:23,200] INFO - Database connection closed
+[2025-06-16 19:59:31,795] INFO - Connected to the database
+[2025-06-16 19:59:31,795] INFO - Attempt to signin using the email - aayushp0822@gmail.co
+[2025-06-16 19:59:31,799] WARNING - Wrong attempt to signin by aayushp0822@gmail.co
+[2025-06-16 19:59:31,803] INFO - Database connection closed
+[2025-06-16 19:59:38,355] INFO - Connected to the database
+[2025-06-16 19:59:38,355] INFO - Attempt to signin using the email - aayushp0822@gmail.co
+[2025-06-16 19:59:38,356] WARNING - Wrong attempt to signin by aayushp0822@gmail.co
+[2025-06-16 19:59:38,357] INFO - Database connection closed
+[2025-06-16 20:03:12,512] INFO - Connected to the database
+[2025-06-16 20:03:12,515] INFO - Attempt to signin using the email - aayushp082@gmail.com
+[2025-06-16 20:03:12,533] WARNING - Wrong attempt to signin by aayushp082@gmail.com
+[2025-06-16 20:03:12,534] INFO - Database connection closed
+[2025-06-16 20:04:05,599] INFO - App restarted
+[2025-06-16 20:04:15,162] INFO - Connected to the database
+[2025-06-16 20:04:15,168] INFO - Attempt to signin using the email - aayushp0821@gmail.com
+[2025-06-16 20:04:15,200] WARNING - Signin failed: Email not found - aayushp0821@gmail.com
+[2025-06-16 20:04:15,202] INFO - Database connection closed
+[2025-06-16 20:04:27,741] INFO - Connected to the database
+[2025-06-16 20:04:27,743] INFO - Attempt to signin using the email - aayushp0822@gmail.com
+[2025-06-16 20:04:28,158] INFO - User with email - aayushp0822@gmail.com successfully signed in
+[2025-06-16 20:04:28,159] INFO - Database connection closed
+[2025-06-16 20:04:34,704] INFO - Connected to the database
+[2025-06-16 20:04:34,705] INFO - Attempt to signin using the email - aayushp0822@gmail.co
+[2025-06-16 20:04:34,706] WARNING - Signin failed: Email not found - aayushp0822@gmail.co
+[2025-06-16 20:04:34,707] INFO - Database connection closed
+[2025-06-16 20:05:37,272] INFO - App restarted
+[2025-06-16 20:05:48,319] INFO - Connected to the database
+[2025-06-16 20:05:48,327] INFO - Database connection closed
+[2025-06-16 20:05:55,907] INFO - Connected to the database
+[2025-06-16 20:05:55,908] INFO - Attempt to signin using the email - aayushp0822@gmail.com
+[2025-06-16 20:05:56,356] INFO - User with email - aayushp0822@gmail.com successfully signed in
+[2025-06-16 20:05:56,357] INFO - Database connection closed
+[2025-06-16 20:06:22,978] INFO - Connected to the database
+[2025-06-16 20:06:22,985] INFO - User searched for products with: category=None, min_price=None, max_price=None, sort_by=id, page=1, page_size=10
+[2025-06-16 20:06:22,993] INFO - Products fetched successfully with filters.
+[2025-06-16 20:06:22,995] INFO - Database connection closed
+[2025-06-16 20:10:54,615] INFO - App restarted
+[2025-06-16 20:10:55,243] INFO - App restarted
+[2025-06-16 20:11:21,341] INFO - App restarted
+[2025-06-16 20:11:42,438] INFO - App restarted
+[2025-06-16 20:11:45,758] INFO - Connected to the database
+[2025-06-16 20:11:45,759] INFO - User searched for products with: category=None, min_price=None, max_price=None, sort_by=id, page=1, page_size=10
+[2025-06-16 20:11:45,771] INFO - Products fetched successfully with filters.
+[2025-06-16 20:11:45,772] INFO - Database connection closed
+[2025-06-16 20:13:44,542] INFO - App restarted
+[2025-06-16 20:13:46,323] INFO - App restarted
+[2025-06-16 20:13:50,959] INFO - Connected to the database
+[2025-06-16 20:13:50,959] INFO - User searched for products with: category=None, min_price=None, max_price=None, sort_by=id, page=1, page_size=10
+[2025-06-16 20:13:50,973] INFO - Products fetched successfully with filters.
+[2025-06-16 20:13:50,974] INFO - Database connection closed
+[2025-06-16 20:15:16,235] INFO - App restarted
+[2025-06-16 20:16:01,524] INFO - App restarted
+[2025-06-16 20:16:16,714] INFO - Connected to the database
+[2025-06-16 20:16:16,715] INFO - User searched for products with: category=None, min_price=None, max_price=1000.0, sort_by=id, page=1, page_size=10
+[2025-06-16 20:16:16,732] INFO - Products fetched successfully with filters.
+[2025-06-16 20:16:16,733] INFO - Database connection closed
+[2025-06-16 20:16:25,231] INFO - Connected to the database
+[2025-06-16 20:16:25,232] INFO - User searched for products with: category=shoes, min_price=None, max_price=1000.0, sort_by=id, page=1, page_size=10
+[2025-06-16 20:16:25,243] INFO - Products fetched successfully with filters.
+[2025-06-16 20:16:25,244] INFO - Database connection closed
+[2025-06-16 20:16:46,763] INFO - Connected to the database
+[2025-06-16 20:16:46,764] INFO - User searched for products with: category=None, min_price=None, max_price=None, sort_by=price, page=1, page_size=10
+[2025-06-16 20:16:46,768] INFO - Products fetched successfully with filters.
+[2025-06-16 20:16:46,769] INFO - Database connection closed
+[2025-06-16 20:17:11,867] INFO - Connected to the database
+[2025-06-16 20:17:11,868] INFO - User searched for products with: category=None, min_price=None, max_price=None, sort_by=name, page=1, page_size=10
+[2025-06-16 20:17:11,872] INFO - Products fetched successfully with filters.
+[2025-06-16 20:17:11,873] INFO - Database connection closed
+[2025-06-16 20:17:55,722] INFO - Connected to the database
+[2025-06-16 20:17:55,732] INFO - Database connection closed
+[2025-06-16 20:18:14,371] INFO - Connected to the database
+[2025-06-16 20:18:14,372] INFO - Search requested with keyword: mouse
+[2025-06-16 20:18:14,385] INFO - Database connection closed
+[2025-06-16 20:19:33,095] INFO - Connected to the database
+[2025-06-16 20:19:33,111] INFO - Attempt to signin using the email - aayushp0822@gmail.com
+[2025-06-16 20:19:33,546] INFO - User with email - aayushp0822@gmail.com successfully signed in
+[2025-06-16 20:19:33,547] INFO - Database connection closed
+[2025-06-16 20:20:06,676] INFO - Connected to the database
+[2025-06-16 20:20:06,677] INFO - Search requested with keyword: a
+[2025-06-16 20:20:06,688] INFO - Database connection closed
+[2025-06-16 20:20:24,169] INFO - Connected to the database
+[2025-06-16 20:20:24,186] INFO - Database connection closed
+[2025-06-16 20:20:58,321] INFO - App restarted
+[2025-06-16 20:21:01,094] INFO - App restarted
+[2025-06-16 20:21:26,450] INFO - Connected to the database
+[2025-06-16 20:21:26,457] INFO - Attempt to signin using the email - aayushp717@gmail.com
+[2025-06-16 20:21:26,896] WARNING - Signin failed: Incorrect password for - aayushp717@gmail.com
+[2025-06-16 20:21:26,897] INFO - Database connection closed
+[2025-06-16 20:22:46,573] INFO - Connected to the database
+[2025-06-16 20:22:46,576] INFO - Attempt to signup using email wolfpack1254919@yahoo.com
+[2025-06-16 20:22:46,965] INFO - user created successfully with the email - wolfpack1254919@yahoo.com and role: UserRole.user
+[2025-06-16 20:22:46,966] INFO - Database connection closed
+[2025-06-16 20:30:21,075] INFO - App restarted
+[2025-06-16 20:31:17,532] INFO - Connected to the database
+[2025-06-16 20:31:17,544] INFO - Database connection closed
+[2025-06-16 20:31:39,570] INFO - Connected to the database
+[2025-06-16 20:31:39,572] INFO - Database connection closed
+[2025-06-16 20:31:58,553] INFO - Connected to the database
+[2025-06-16 20:31:58,553] INFO - Database connection closed
+[2025-06-16 20:32:40,051] INFO - Connected to the database
+[2025-06-16 20:32:40,052] INFO - Attempt to signup using email wolfpack1254919@gmail.com
+[2025-06-16 20:32:40,507] INFO - user created successfully with the email - wolfpack1254919@gmail.com and role: UserRole.user
+[2025-06-16 20:32:40,508] INFO - Database connection closed
+[2025-06-16 20:32:53,460] INFO - Connected to the database
+[2025-06-16 20:32:53,464] INFO - Database connection closed
+[2025-06-16 20:33:27,149] INFO - Connected to the database
+[2025-06-16 20:33:27,150] INFO - Attempt to signin using the email - wolfpack1254919@gmail.com
+[2025-06-16 20:33:27,532] INFO - User with email - wolfpack1254919@gmail.com successfully signed in
+[2025-06-16 20:33:27,533] INFO - Database connection closed
+[2025-06-16 20:33:52,256] INFO - Connected to the database
+[2025-06-16 20:33:52,267] INFO - Database connection closed
+[2025-06-16 20:34:07,784] INFO - Connected to the database
+[2025-06-16 20:34:07,785] INFO - User searched for products with: category=None, min_price=None, max_price=None, sort_by=id, page=1, page_size=10
+[2025-06-16 20:34:07,789] INFO - Products fetched successfully with filters.
+[2025-06-16 20:34:07,791] INFO - Database connection closed
+[2025-06-16 20:34:24,366] INFO - Connected to the database
+[2025-06-16 20:34:24,367] INFO - Search requested with keyword: aa
+[2025-06-16 20:34:24,371] INFO - Database connection closed
+[2025-06-16 20:34:35,613] INFO - Connected to the database
+[2025-06-16 20:34:35,614] INFO - Search requested with keyword: mouse
+[2025-06-16 20:34:35,616] INFO - Database connection closed
+[2025-06-16 20:34:54,733] INFO - Connected to the database
+[2025-06-16 20:34:54,736] INFO - request to view the cart by User.email
+[2025-06-16 20:34:54,739] INFO - Database connection closed
+[2025-06-16 20:35:15,565] INFO - Connected to the database
+[2025-06-16 20:35:15,585] INFO - new cart item added - (6, 2, 1) by User.email
+[2025-06-16 20:35:15,585] INFO - Database connection closed
+[2025-06-16 20:35:40,544] INFO - Connected to the database
+[2025-06-16 20:35:40,554] INFO - request to change the cart quantity of item with product id 2
+[2025-06-16 20:35:40,555] INFO - Database connection closed
+[2025-06-16 20:40:02,016] INFO - App restarted
+[2025-06-16 20:40:21,596] INFO - Connected to the database
+[2025-06-16 20:40:21,603] INFO - Attempt to signin using the email - wolfpack1254919@gmail.com
+[2025-06-16 20:40:22,029] INFO - User with email - wolfpack1254919@gmail.com successfully signed in
+[2025-06-16 20:40:22,030] INFO - Database connection closed
+[2025-06-16 20:40:44,500] INFO - Connected to the database
+[2025-06-16 20:40:44,515] INFO - Request to update quantity of product 2 in cart by user wolfpack1254919@gmail.com
+[2025-06-16 20:40:44,525] INFO - Cart item quantity updated by user wolfpack1254919@gmail.com to 4
+[2025-06-16 20:40:44,526] INFO - Database connection closed
+[2025-06-16 20:40:52,423] INFO - Connected to the database
+[2025-06-16 20:40:52,432] INFO - Request to update quantity of product 2 in cart by user wolfpack1254919@gmail.com
+[2025-06-16 20:40:52,437] INFO - Cart item quantity updated by user wolfpack1254919@gmail.com to 5
+[2025-06-16 20:40:52,438] INFO - Database connection closed
+[2025-06-16 20:42:56,484] INFO - App restarted
+[2025-06-16 20:43:30,516] INFO - Connected to the database
+[2025-06-16 20:43:30,522] INFO - Attempt to signin using the email - wolfpack1254919@gmail.com
+[2025-06-16 20:43:30,950] INFO - User with email - wolfpack1254919@gmail.com successfully signed in
+[2025-06-16 20:43:30,951] INFO - Database connection closed
+[2025-06-16 20:43:46,393] INFO - Connected to the database
+[2025-06-16 20:43:46,407] INFO - request to view the cart by User.email
+[2025-06-16 20:43:46,410] INFO - Database connection closed
+[2025-06-16 20:45:30,508] INFO - Connected to the database
+[2025-06-16 20:45:30,540] INFO - Database connection closed
+[2025-06-16 20:47:46,338] INFO - Connected to the database
+[2025-06-16 20:47:46,351] INFO - Database connection closed
+[2025-06-16 20:47:54,812] INFO - Connected to the database
+[2025-06-16 20:47:54,841] INFO - new cart item added - (6, 3, 1) by User.email
+[2025-06-16 20:47:54,843] INFO - Database connection closed
+[2025-06-16 20:48:01,075] INFO - Connected to the database
+[2025-06-16 20:48:01,078] INFO - request to view the cart by User.email
+[2025-06-16 20:48:01,079] INFO - Database connection closed
+[2025-06-16 20:48:15,823] INFO - Connected to the database
+[2025-06-16 20:48:15,827] INFO - attemp to purchase the cart by the user wolfpack1254919@gmail.com
+[2025-06-16 20:48:15,851] INFO - Cart checked out successfully by wolfpack1254919@gmail.com and cart cleared 
+[2025-06-16 20:48:15,853] INFO - Database connection closed
+[2025-06-16 20:48:25,390] INFO - Connected to the database
+[2025-06-16 20:48:25,393] INFO - User with email wolfpack1254919@gmail.com requesting all the orders
+[2025-06-16 20:48:25,395] INFO - Database connection closed
+[2025-06-16 20:48:51,568] INFO - Connected to the database
+[2025-06-16 20:48:51,571] INFO - wolfpack1254919@gmail.com checking for the details of the order with order id 2
+[2025-06-16 20:48:51,578] INFO - Database connection closed
+[2025-06-16 20:49:05,520] INFO - Connected to the database
+[2025-06-16 20:49:05,522] INFO - request to view the cart by User.email
+[2025-06-16 20:49:05,523] INFO - Database connection closed

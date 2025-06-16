@@ -6,7 +6,7 @@ def require_user_role(current_user: User = Depends(get_current_user)):
     if current_user.role != "user":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only users can perform this action."
+            detail="Only users can perform this action. Signin as a user"
         )
     return current_user
 

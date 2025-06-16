@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Path, status
 from sqlalchemy.orm import Session
 from app.cart import models, schemas
 from app.core.database import get_db
@@ -73,41 +73,50 @@ def view_cart(
     return cart_items
 
 @router.patch("/{product_id}")
-def modify_cart_quantity(product_id: int,
-                         data: schemas.UpdateQuantityChangeRequest,
-                         db: Session = Depends(get_db),
-                         current_user: User = Depends(require_user_role)):
+def update_cart_quantity(
+    data: schemas.UpdateQuantityRequest,
+    product_id: int = Path(..., ge=1),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_user_role),
+):
+    logger.info(f"Request to update quantity of product {product_id} in cart by user {current_user.email}")
 
-    logger.info(f"request to change the cart quantity of item with product id {product_id}")
     cart_item = db.query(models.Cart).filter(
         models.Cart.user_id == current_user.id,
         models.Cart.product_id == product_id
     ).first()
 
     if not cart_item:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found in cart")
-
-    new_quantity = cart_item.quantity + data.change
-
-    if new_quantity < 1:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Quantity cannot be less than 1 or either remove the product from the cart")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Item not found in cart"
+        )
 
     product = db.query(Product).filter(Product.id == product_id).first()
-    if not product or new_quantity > product.stock:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=" sorry we are out of stock")
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
 
-    cart_item.quantity = new_quantity
+    if data.quantity > product.stock:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Sorry, we are out of stock"
+        )
+
+    cart_item.quantity = data.quantity
     db.commit()
     db.refresh(cart_item)
-    logger.info(f"cart item quantity moodified by the user {current_user.email}")
+
+    logger.info(f"Cart item quantity updated by user {current_user.email} to {data.quantity}")
+
     return {
         "message": "Cart item quantity updated",
         "product_id": product_id,
         "new_quantity": cart_item.quantity
     }
 
+
 @router.delete("/{product_id}")
-def remove_from_cart(product_id: int,
+def remove_from_cart(product_id: int = Path(...,ge=1),
                      db: Session = Depends(get_db),
                      current_user: User = Depends(get_current_user)):
     logger.info(f"attempt to remove the item from the cart")

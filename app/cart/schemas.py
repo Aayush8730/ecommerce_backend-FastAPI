@@ -10,14 +10,9 @@ class CartItemOut(BaseModel):
     quantity: int
 
     class Config:
-        orm_mode = True
+        form_attributes = True
 
-class UpdateQuantityChangeRequest(BaseModel):
-    change: int = Field(..., description="Change in quantity, can be positive or negative")
 
-    @field_validator("change")
-    @classmethod
-    def validate_change(cls, v: int) -> int:
-        if v == 0:
-            raise ValueError("Quantity change cannot be zero")
-        return v
+class UpdateQuantityRequest(BaseModel):
+    quantity: int = Field(..., ge=1, description="New quantity must be at least 1")
+

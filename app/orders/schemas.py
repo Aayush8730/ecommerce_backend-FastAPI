@@ -18,7 +18,7 @@ class OrderItemResponse(OrderItemBase):
     subtotal: float = Field(..., ge=0, description="Subtotal must be non-negative")
 
     class Config:
-        orm_mode = True
+        form_attributes = True
 
 class OrderCreateResponse(BaseModel):
     order_id: int
@@ -26,7 +26,7 @@ class OrderCreateResponse(BaseModel):
     status: OrderStatus
 
     class Config:
-        orm_mode = True
+        form_attributes = True
 
 class OrderListResponse(BaseModel):
     order_id: int
@@ -35,7 +35,7 @@ class OrderListResponse(BaseModel):
     status: OrderStatus
 
     class Config:
-        orm_mode = True
+        form_attributes = True
 
 class OrderDetailResponse(BaseModel):
     order_id: int
@@ -45,4 +45,4 @@ class OrderDetailResponse(BaseModel):
     items: List[OrderItemResponse]
 
     class Config:
-        orm_mode = True
+        form_attributes = True

@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Path
 from sqlalchemy.orm import Session
 from app.auth.models import User
 from app.core.database import get_db
@@ -33,7 +33,7 @@ def get_user_orders(
 
 @router.get("/{order_id}", response_model=schemas.OrderDetailResponse)
 def get_order_detail(
-    order_id: int,
+    order_id: int = Path(...,ge=1),
     db: Session = Depends(get_db),
     current_user: User = Depends(require_user_role)
 ):

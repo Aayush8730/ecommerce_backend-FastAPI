@@ -1,6 +1,5 @@
 from pydantic import BaseModel, EmailStr, field_validator
 from enum import Enum
-from fastapi import Form
 
 class UserRole(str, Enum):
     admin = "admin"
@@ -25,11 +24,24 @@ def validate_password(password: str) -> bool:
 
     return has_upper and has_digit and has_special
 
+ALLOWED_DOMAINS = {"gmail.com", "yahoo.com", "nucleusteq.org"}
+
+def validate_email_domain(email: str) -> str:
+    domain = email.split("@")[-1].lower()
+    if domain not in ALLOWED_DOMAINS:
+        raise ValueError("Email domain must be one of: gmail.com, yahoo.com, nucleusteq.org")
+    return email
+
 class SignupRequest(BaseModel):
     name: str
     email: EmailStr
     password: str
     role: UserRole = UserRole.user
+
+    @field_validator("email")
+    @classmethod
+    def check_email_domain(cls, v: str) -> str:
+        return validate_email_domain(v)
 
     @field_validator("password")
     @classmethod
@@ -41,6 +53,11 @@ class SignupRequest(BaseModel):
 class SigninRequest(BaseModel):
     email: EmailStr
     password: str
+
+    @field_validator("email")
+    @classmethod
+    def check_email_domain(cls, v: str) -> str:
+        return validate_email_domain(v)
 
     @field_validator("password")
     @classmethod
@@ -57,17 +74,14 @@ class TokenResponse(BaseModel):
 class ForgotPasswordRequest(BaseModel):
     email: EmailStr
 
+    @field_validator("email")
+    @classmethod
+    def check_email_domain(cls, v: str) -> str:
+        return validate_email_domain(v)
+
 class ResetPasswordRequest(BaseModel):
     token: str
     new_password: str
-
-    @classmethod
-    def as_form(
-        cls,
-        token: str = Form(...),
-        new_password: str = Form(...)
-    ):
-        return cls(token=token, new_password=new_password)
 
     @field_validator("new_password")
     @classmethod

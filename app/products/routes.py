@@ -52,8 +52,8 @@ def get_product_by_id(product_id: int = Path(...,gt=0), db: Session = Depends(ge
 
 @router.put("/{product_id}", response_model=schemas.ProductOut)
 def update_product(
-    product_id: int,
     product_data: schemas.CreateProduct,
+    product_id: int = Path(...,ge=1),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
