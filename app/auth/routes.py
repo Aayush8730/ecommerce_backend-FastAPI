@@ -10,6 +10,8 @@ from app.core.database import get_db
 from enum import Enum
 from app.auth.schemas import ForgotPasswordRequest, ResetPasswordRequest, SignupRequest, SigninRequest, TokenResponse
 from app.core.logging import logger
+from app.auth.utils import verify_jwt_token
+
 
 router = APIRouter()
 
@@ -94,3 +96,32 @@ def reset_password(request: ResetPasswordRequest , db: Session = Depends(get_db)
     logger.info(f"password updated succesfully {user.email}")
     return f"Password updated successfully of user {user.email}"
 
+from app.auth.schemas import RefreshTokenRequest
+from fastapi import Request
+
+
+@router.post("/refresh-token", response_model=TokenResponse)
+def refresh_token(
+    request_data: RefreshTokenRequest,
+    db: Session = Depends(get_db)
+):
+    payload = verify_jwt_token(request_data.refresh_token)
+    if payload is None:
+        raise HTTPException(status_code=401, detail="Invalid or expired refresh token")
+
+    email = payload.get("sub")
+    if not email:
+        raise HTTPException(status_code=401, detail="Invalid token payload")
+
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    new_access_token = create_access_token({"sub": user.email, "role": user.role})
+    new_refresh_token = create_refresh_token({"sub": user.email})
+
+    return {
+        "access_token": new_access_token,
+        "refresh_token": new_refresh_token,
+        "token_type": "bearer"
+    }

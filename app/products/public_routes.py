@@ -5,6 +5,7 @@ from app.products import models, schemas
 from app.core.database import get_db
 from app.products.schemas import ProductSearchResponse
 from app.core.logging import logger
+from app.utils.handlers import InvalidQueryParam, ProductNotFound
 
 router = APIRouter()
 
@@ -22,10 +23,7 @@ def list_products(
     
     valid_sort_fields = ["price", "name", "id"]
     if sort_by not in valid_sort_fields:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Invalid sort_by field. Must be one of: {', '.join(valid_sort_fields)}"
-        )
+        raise InvalidQueryParam(f"Invalid sort_by field. Must be one of: {', '.join(valid_sort_fields)}")
 
     try:
         query = db.query(models.Product)
@@ -93,5 +91,5 @@ def get_product_detail(id: int = Path(..., ge=1), db: Session = Depends(get_db))
 
     product = db.query(models.Product).filter(models.Product.id == id).first()
     if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
+        raise ProductNotFound()
     return product

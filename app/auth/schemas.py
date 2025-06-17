@@ -89,3 +89,7 @@ class ResetPasswordRequest(BaseModel):
         if not validate_password(v):
             raise ValueError("Password must be at least 8 characters long and include an uppercase letter, a digit, and a special character (!@#$%^&*).")
         return v
+
+
+class RefreshTokenRequest(BaseModel):
+    refresh_token: str

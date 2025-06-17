@@ -48,3 +48,14 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     if user is None:
         raise credentials_exception
     return user
+
+def verify_jwt_token(token: str, secret_key: str = settings.REFRESH_SECRET_KEY) -> dict | None:
+    try:
+        payload = jwt.decode(token, secret_key, algorithms=[settings.ALGORITHM])
+        return payload
+    except jwt.ExpiredSignatureError:
+        print("Token expired")
+        return None
+    except jwt.InvalidTokenError as e:
+        print(f"Invalid token: {e}")
+        return None
