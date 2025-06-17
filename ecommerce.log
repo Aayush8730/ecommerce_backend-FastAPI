@@ -537,3 +537,43 @@
 [2025-06-17 12:28:28,130] INFO - Database connection closed
 [2025-06-17 12:28:36,818] INFO - Connected to the database
 [2025-06-17 12:28:36,821] INFO - Database connection closed
+[2025-06-17 12:31:50,353] INFO - Connected to the database
+[2025-06-17 12:31:50,359] INFO - Attempt to signin using the email - aayushp717@gmail.com
+[2025-06-17 12:31:50,759] WARNING - Signin failed: Incorrect password for - aayushp717@gmail.com
+[2025-06-17 12:31:50,761] INFO - Database connection closed
+[2025-06-17 12:32:12,973] INFO - Connected to the database
+[2025-06-17 12:32:12,974] INFO - Attempt to signin using the email - wolfpack1254919@gmail.com
+[2025-06-17 12:32:13,357] INFO - User with email - wolfpack1254919@gmail.com successfully signed in
+[2025-06-17 12:32:13,360] INFO - Database connection closed
+[2025-06-17 12:32:38,085] INFO - Connected to the database
+[2025-06-17 12:32:38,097] INFO - Database connection closed
+[2025-06-17 12:32:47,974] INFO - Connected to the database
+[2025-06-17 12:32:47,975] INFO - User searched for products with: category=None, min_price=None, max_price=None, sort_by=id, page=1, page_size=10
+[2025-06-17 12:32:47,982] INFO - Products fetched successfully with filters.
+[2025-06-17 12:32:47,985] INFO - Database connection closed
+[2025-06-17 12:33:00,611] INFO - Connected to the database
+[2025-06-17 12:33:00,613] INFO - request to view the cart by User.email
+[2025-06-17 12:33:00,616] INFO - Database connection closed
+[2025-06-17 12:39:15,671] INFO - App restarted
+[2025-06-17 12:39:19,645] INFO - App restarted
+[2025-06-17 12:39:51,403] INFO - Connected to the database
+[2025-06-17 12:39:51,416] INFO - Database connection closed
+[2025-06-17 12:40:15,936] INFO - Connected to the database
+[2025-06-17 12:40:15,938] INFO - Attempt to signup using email aman@gmail.com
+[2025-06-17 12:40:16,372] INFO - user created successfully with the email - aman@gmail.com and role: UserRole.user
+[2025-06-17 12:40:16,373] INFO - Database connection closed
+[2025-06-17 12:40:36,027] INFO - Connected to the database
+[2025-06-17 12:40:36,030] INFO - Attempt to signin using the email - aman@gmail.com
+[2025-06-17 12:40:36,411] INFO - User with email - aman@gmail.com successfully signed in
+[2025-06-17 12:40:36,411] INFO - Database connection closed
+[2025-06-17 12:40:59,020] INFO - Connected to the database
+[2025-06-17 12:40:59,024] INFO - attempt to reset the password using the free email service
+[2025-06-17 12:40:59,034] INFO - password reset email sent to aman@gmail.com
+[2025-06-17 12:41:06,787] INFO - Database connection closed
+[2025-06-17 12:41:55,247] INFO - Connected to the database
+[2025-06-17 12:41:55,660] INFO - password updated succesfully aman@gmail.com
+[2025-06-17 12:41:55,661] INFO - Database connection closed
+[2025-06-17 12:42:20,959] INFO - Connected to the database
+[2025-06-17 12:42:20,962] INFO - User searched for products with: category=None, min_price=None, max_price=None, sort_by=id, page=1, page_size=10
+[2025-06-17 12:42:20,969] INFO - Products fetched successfully with filters.
+[2025-06-17 12:42:20,971] INFO - Database connection closed
